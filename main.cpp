@@ -1,3 +1,4 @@
+// Libraries used for the program
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -26,7 +27,7 @@ string encrypt(const string& password) {
     return encrypted;
 }
 
-// Function for decrypting the encrypted password
+// Decrypting the encrypted password stored in the passwords.txt file using XOR
 
 string decrypt(const string& encryptedPassword) {
     const char XOR_KEY = 0x77;
