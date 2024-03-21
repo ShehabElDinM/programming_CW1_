@@ -24,3 +24,14 @@ string encrypt(const string& password) {
     }
     return encrypted;
 }
+
+// Function for decrypting the encrypted password
+
+string decrypt(const string& encryptedPassword) {
+    const char XOR_KEY = 0x77;
+    string decrypted;
+    for (char c : encryptedPassword) {
+        decrypted += c ^ XOR_KEY;
+    }
+    return decrypted;
+}
