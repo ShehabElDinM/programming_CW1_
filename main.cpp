@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -53,4 +54,43 @@ int secondary_hash_fn(const string& key) {
         hash += c * 31; // Using a different prime multiplier for diversity
     }
     return (hash % (ARRAY_SIZE - 1)) + 1; // Ensure non-zero and less than ARRAY_SIZE
+}
+
+void save_pw(PasswordEntry passwordTable[], const string& filename) {
+    ofstream file(filename);
+    if (file.is_open()) {
+        for (int i = 0; i < ARRAY_SIZE; ++i) {
+            if (!passwordTable[i].username.empty()) {
+                file << passwordTable[i].username << ":" << passwordTable[i].encryptedPassword << "\n";
+            }
+        }
+        file.close();
+        cout << "Passwords saved successfully.\n";
+    } else {
+        cerr << "Error: Unable to open file for writing.\n";
+    }
+}
+
+void load_pw(PasswordEntry passwordTable[], const string& filename) {
+    ifstream file(filename);
+    if (file.is_open()) {
+        string line;
+        while (getline(file, line)) {
+            size_t pos = line.find(":");
+            if (pos != string::npos) {
+                string username = line.substr(0, pos);
+                string encryptedPassword = line.substr(pos + 1);
+                int index = hash_fn(username);
+                int step = secondary_hash_fn(username);
+                while (!passwordTable[index].username.empty()) {
+                    index = (index + step) % ARRAY_SIZE;
+                }
+                passwordTable[index] = PasswordEntry(username, encryptedPassword);
+            }
+        }
+        file.close();
+        cout << "Passwords loaded successfully.\n";
+    } else {
+        cerr << "Error: Unable to open file for reading.\n";
+    }
 }
