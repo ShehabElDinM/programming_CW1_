@@ -57,6 +57,8 @@ int secondary_hash_fn(const string& key) {
     return (hash % (ARRAY_SIZE - 1)) + 1; // Ensure non-zero and less than ARRAY_SIZE
 }
 
+// Save_PW is a function used to store the passwords entered from the user
+
 void save_pw(PasswordEntry passwordTable[], const string& filename) {
     ofstream file(filename);
     if (file.is_open()) {
@@ -71,6 +73,8 @@ void save_pw(PasswordEntry passwordTable[], const string& filename) {
         cerr << "Error: Unable to open file for writing.\n";
     }
 }
+
+// Load_pw is function used to load the passwords stored in the passwords.txt file into a hash table
 
 void load_pw(PasswordEntry passwordTable[], const string& filename) {
     ifstream file(filename);
@@ -95,6 +99,8 @@ void load_pw(PasswordEntry passwordTable[], const string& filename) {
         cerr << "Error: Unable to open file for reading.\n";
     }
 }
+
+// add_pw is function used to add the passwords entered by the user into a hashtable
 
 void add_pw(PasswordEntry passwordTable[]) {
     string username, password;
@@ -135,12 +141,13 @@ void retrieve_pw(const PasswordEntry passwordTable[]) {
 
 int main() {
 
+    // Absolute path of the passwords.txt file
 
     string filename = "G:\\programming(CW1)\\passwords.txt";
 
     cout << "Welcome to the Password Manager!\n";
 
-
+    // Establishing a login system with "shehab" as the username and "programming" as the password
     string username, password;
     while (true) {
         cout << "Enter username: ";
@@ -156,13 +163,15 @@ int main() {
         }
     }
 
+    // Declaring a hash table with the size of ARRAY_SIZE which is 100
+
     PasswordEntry passwordTable[ARRAY_SIZE];
 
-
+    // Initializing the load_pw function, which will load the passwords stored into a hash table
 
     load_pw(passwordTable, filename);
 
-
+    // Establishing a simple user interface with 3 options, this will loop until the user exits from the code
 
     while (true) {
         cout << "\n1. Add new password\n";
@@ -173,7 +182,7 @@ int main() {
         int choice;
         cin >> choice;
 
-
+        // Utilizing a switch statement in order to execute different operations based on the user's preferences
 
         switch (choice) {
             case 1:
