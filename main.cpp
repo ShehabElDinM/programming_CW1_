@@ -135,5 +135,26 @@ void retrieve_pw(const PasswordEntry passwordTable[]) {
 
 int main() {
 
+
+    string filename = "C:\\Users\\Light\\CLionProjects\\untitled2\\passwords.txt";
+
+    cout << "Welcome to the Password Manager!\n";
+
+
+    string username, password;
+    while (true) {
+        cout << "Enter username: ";
+        cin >> username;
+        cout << "Enter password: ";
+        cin >> password;
+
+        if (username == "shehab" && password == "programming") {
+            cout << "Login successful.\n";
+            break; // Break out of the login loop
+        } else {
+            cout << "Invalid username or password. Please try again.\n";
+        }
+    }
+
     return 0;
 }
