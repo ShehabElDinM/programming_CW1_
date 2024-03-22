@@ -136,7 +136,7 @@ void retrieve_pw(const PasswordEntry passwordTable[]) {
 int main() {
 
 
-    string filename = "passwords.txt";
+    string filename = "G:\\programming(CW1)\\passwords.txt";
 
     cout << "Welcome to the Password Manager!\n";
 
