@@ -136,7 +136,7 @@ void retrieve_pw(const PasswordEntry passwordTable[]) {
 int main() {
 
 
-    string filename = "C:\\Users\\Light\\CLionProjects\\untitled2\\passwords.txt";
+    string filename = "passwords.txt";
 
     cout << "Welcome to the Password Manager!\n";
 
@@ -153,6 +153,41 @@ int main() {
             break; // Break out of the login loop
         } else {
             cout << "Invalid username or password. Please try again.\n";
+        }
+    }
+
+    PasswordEntry passwordTable[ARRAY_SIZE];
+
+
+
+    load_pw(passwordTable, filename);
+
+
+
+    while (true) {
+        cout << "\n1. Add new password\n";
+        cout << "2. Retrieve password\n";
+        cout << "3. Exit\n";
+        cout << "Choose an option: ";
+
+        int choice;
+        cin >> choice;
+
+
+
+        switch (choice) {
+            case 1:
+                add_pw(passwordTable);
+                save_pw(passwordTable, filename);
+                break;
+            case 2:
+                retrieve_pw(passwordTable);
+                break;
+            case 3:
+                cout << "Exiting...\n";
+                return 0;
+            default:
+                cout << "Invalid option. Please try again.\n";
         }
     }
 
