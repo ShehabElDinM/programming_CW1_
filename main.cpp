@@ -95,3 +95,41 @@ void load_pw(PasswordEntry passwordTable[], const string& filename) {
         cerr << "Error: Unable to open file for reading.\n";
     }
 }
+
+void add_pw(PasswordEntry passwordTable[]) {
+    string username, password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+    string encryptedPassword = encrypt(password);
+    int index = hash_fn(username);
+    int step = secondary_hash_fn(username);
+    while (!passwordTable[index].username.empty()) {
+        index = (index + step) % ARRAY_SIZE;
+    }
+    passwordTable[index] = PasswordEntry(username, encryptedPassword);
+    cout << "Password added successfully.\n";
+}
+
+// retrieve_pw is function used to retrieve passwords associated with a specific user that is inside a hashtable
+
+void retrieve_pw(const PasswordEntry passwordTable[]) {
+    string username;
+    cout << "Enter username: ";
+    cin >> username;
+    int index = hash_fn(username);
+    int step = secondary_hash_fn(username);
+    bool found = false; // Flag to track if any matching username is found
+    while (!passwordTable[index].username.empty()) {
+        if (passwordTable[index].username == username) {
+            cout << "Password for " << username << ": " << decrypt(passwordTable[index].encryptedPassword) << endl;
+            found = true; // Set flag to true indicating at least one match is found
+        }
+        index = (index + step) % ARRAY_SIZE;
+    }
+    if (!found) {
+        cout << "Password not found for " << username << endl;
+    }
+}
+
