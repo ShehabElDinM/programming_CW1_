@@ -133,3 +133,7 @@ void retrieve_pw(const PasswordEntry passwordTable[]) {
     }
 }
 
+int main() {
+
+    return 0;
+}
